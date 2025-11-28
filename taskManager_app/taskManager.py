@@ -109,6 +109,7 @@ def create_task(tasks, FILE_TASKS):
     save(tasks=tasks, FILE_TASKS=FILE_TASKS)
     print(f"Task {new_task["title"]} is saved.")
     time.sleep(1)
+    print("\n" * 25)
 
 def status_color(tasks):
     """Color status output"""
@@ -195,6 +196,7 @@ def edit_task(tasks, FILE_TASKS):
     save(tasks=tasks, FILE_TASKS=FILE_TASKS)
     print(f"Task: {edit_title} is changed.")
     time.sleep(1)
+    print("\n" * 25)
 
 def delete_task(tasks, FILE_TASKS):
     # Header
@@ -242,16 +244,38 @@ def delete_task(tasks, FILE_TASKS):
     else:
         print(f"Nothing is deleted.")
         time.sleep(1)
-    print()
+    print("\n" * 25)
 
+def show_tasks(tasks):
+    print("\n" * 25)
+    print("─" * 53)
 
+    for index, task in enumerate(tasks):
+        print(f"{CYAN_BOLD}{index}{RESET}")
+        print(f"{BOLD}Id: {RESET}{task["id"]}")
+        print(f"{BOLD}Title: {RESET}{task["title"]}")
+        print(f"{BOLD}Description: {RESET}{task["description"]}")
+        print(f"{BOLD}Created_ad: {RESET}{task["created_ad"]}")
+        show_color_status = None
+        if task["status"] == "Not completed":
+            show_color_status = RED_BOLD + task["status"] + RESET
+        elif task["status"] == "In progress":
+            show_color_status = YELLOW_BOLD + task["status"] + RESET
+        elif task["status"] == "Completed":
+            show_color_status = GREEN_BOLD + task["status"] + RESET
+        
+        print(f"{BOLD}Status: {RESET}{show_color_status}")
+        print(f"{BOLD}Completed_ad: {RESET}{task["completed_ad"]}")
+        print("─" * 53)
+        
 
 def taskManager(tasks, FILE_TASKS):
     Exit = False
     read_anim()
-    
+    print("\n" * 25)
+
     while Exit is False:
-        print("\n" * 25)
+
         print(logo)
         main_menu(tasks)
         choice_mainMenu = choice_main_menu(tasks)
@@ -268,6 +292,8 @@ def taskManager(tasks, FILE_TASKS):
             edit_task(tasks=tasks, FILE_TASKS=FILE_TASKS)
         elif choice_mainMenu == 4:
             delete_task(tasks=tasks, FILE_TASKS=FILE_TASKS)
+        elif choice_mainMenu == 5:
+            show_tasks(tasks=tasks)
             
 
 
