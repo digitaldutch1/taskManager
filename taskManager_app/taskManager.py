@@ -91,7 +91,7 @@ def create_task(tasks, FILE_TASKS):
     task_created_ad = time_date_stamp()
     
     # Task status
-    task_status = "not completed"
+    task_status = "Not completed"
 
     # Time stamp completed ad
     task_completed_ad = None
@@ -196,7 +196,53 @@ def edit_task(tasks, FILE_TASKS):
     print(f"Task: {edit_title} is changed.")
     time.sleep(1)
 
+def delete_task(tasks, FILE_TASKS):
+    # Header
+    print("\n" * 25)
+    print(f"{BOLD}Delete task{RESET}")
+    print("─" * 53)
+    status_color(tasks=tasks)
+    print("─" * 53)
+    print()
 
+    # Edit choise, what task to delete
+    delete_choice = int(input(f"Wich task you want to delete, type 0 to {len(tasks)-1}: "))
+    while delete_choice < 0 or delete_choice >= len(tasks):
+        delete_choice = int(input(f"Invalid index, type 0 to {len(tasks)-1}: "))
+    
+    delete = tasks[delete_choice]
+
+    print("\n" * 25)
+    print(f"{BOLD}Edit{RESET}")
+    print("─" * 53)
+    print(f"Title: {delete["title"]}")
+    print(f"Description: {delete["description"]}")
+    color_status = None
+    if delete["status"] == "Not completed":
+        color_status = RED_BOLD + delete["status"] + RESET
+    elif delete["status"] == "In progress":
+        color_status = YELLOW_BOLD + delete["status"] + RESET
+    elif delete["status"] == "Completed":
+        color_status = GREEN_BOLD +delete["status"] + RESET
+    print(f"Status: {color_status}")
+    print("─" * 53)
+    print()
+    
+    # Confirm delete
+    confirm = input("Are you sure you want to delete this task y/n: ").strip().lower()
+    while not (confirm == "y" or confirm == "n"):
+        confirm = input("Invalid input, type y or n: ").strip().lower()
+    
+    # Delete task
+    if confirm == "y":
+        print(f"Task: {delete["title"]} is deleted.")
+        time.sleep(1)
+        del tasks[delete_choice]
+        save(tasks=tasks, FILE_TASKS=FILE_TASKS)
+    else:
+        print(f"Nothing is deleted.")
+        time.sleep(1)
+    print()
 
 
 
@@ -220,6 +266,8 @@ def taskManager(tasks, FILE_TASKS):
             create_task(tasks=tasks, FILE_TASKS=FILE_TASKS)
         elif choice_mainMenu == 3:
             edit_task(tasks=tasks, FILE_TASKS=FILE_TASKS)
+        elif choice_mainMenu == 4:
+            delete_task(tasks=tasks, FILE_TASKS=FILE_TASKS)
             
 
 
