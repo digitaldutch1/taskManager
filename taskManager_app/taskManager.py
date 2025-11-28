@@ -8,6 +8,8 @@ from style import *
 
 FILE_TASKS = "taskManager_app/tasks.json"
 uuid = uuid.uuid4().hex[:8]
+clean_screen = 40
+separate_line = 53
 
 def read(FILE_TASKS):
     """if not exsist make tasks,json and read the file."""
@@ -42,19 +44,19 @@ def read_anim():
 def main_menu(tasks):
     """Showing main menu"""
     if tasks:
-        print("─" * 53)
+        print("─" * separate_line)
         print(f"{CYAN_BOLD}1. {RESET}{BOLD}Exit{RESET}")  
         print(f"{CYAN_BOLD}2. {RESET}{BOLD}Ad task{RESET}")
         print(f"{CYAN_BOLD}3. {RESET}{BOLD}Edit task{RESET}")
         print(f"{CYAN_BOLD}4. {RESET}{BOLD}Delete task{RESET}")
         print(f"{CYAN_BOLD}5. {RESET}{BOLD}Show tasks{RESET}")
         print(f"{CYAN_BOLD}6. {RESET}{BOLD}Change status{RESET}")
-        print("─" * 53)
+        print("─" * separate_line)
     else:
-        print("─" * 53)
+        print("─" * separate_line)
         print(f"{CYAN_BOLD}1. {RESET}{BOLD}Exit{RESET}")  
         print(f"{CYAN_BOLD}2. {RESET}{BOLD}Ad task{RESET}")
-        print("─" * 53)
+        print("─" * separate_line)
 
 def choice_main_menu(tasks):
     """Make choice in main menu"""
@@ -73,9 +75,9 @@ def create_task(tasks, FILE_TASKS):
     # Task id
     task_id = uuid
     
-    print("\n" * 25)
+    print("\n" * clean_screen)
     print(f"{BOLD}Add task{RESET}")
-    print("─" * 53)
+    print("─" * separate_line)
 
     # Task title
     task_title = input("Title: ")
@@ -109,7 +111,7 @@ def create_task(tasks, FILE_TASKS):
     save(tasks=tasks, FILE_TASKS=FILE_TASKS)
     print(f"Task {new_task["title"]} is saved.")
     time.sleep(1)
-    print("\n" * 25)
+    print("\n" * clean_screen)
 
 def status_color(tasks):
     """Color status output"""
@@ -127,11 +129,11 @@ def edit_task(tasks, FILE_TASKS):
     """Edit tasks"""
     
     # Header
-    print("\n" * 25)
+    print("\n" * clean_screen)
     print(f"{BOLD}Edit task{RESET}")
-    print("─" * 53)
+    print("─" * separate_line)
     status_color(tasks=tasks)
-    print("─" * 53)
+    print("─" * separate_line)
     print()
     
     # Edit choise, what task to change
@@ -141,9 +143,9 @@ def edit_task(tasks, FILE_TASKS):
     
     edit = tasks[edit_choice]
 
-    print("\n" * 25)
+    print("\n" * clean_screen)
     print(f"{BOLD}Edit{RESET}")
-    print("─" * 53)
+    print("─" * separate_line)
     print(f"Title: {edit["title"]}")
     print(f"Description: {edit["description"]}")
     color_status = None
@@ -154,7 +156,7 @@ def edit_task(tasks, FILE_TASKS):
     elif edit["status"] == "Completed":
         color_status = GREEN_BOLD + edit["status"] + RESET
     print(f"Status: {color_status}")
-    print("─" * 53)
+    print("─" * separate_line)
     print()
     print("Leave empty if you dont want to change")
     print()
@@ -175,6 +177,7 @@ def edit_task(tasks, FILE_TASKS):
                             f"{CYAN_BOLD}2. {RESET}In progress\n"
                             f"{CYAN_BOLD}3. {RESET}Completed\n"
                             "Make youre choise type 1 to 3: "))
+
     while edit_status < 1 or edit_status > 3:
         edit_status = int(input("Invalid choice, type 1, 2 or 3: "))
     if edit_status == 1:
@@ -183,6 +186,7 @@ def edit_task(tasks, FILE_TASKS):
         edit_status = "In progress"
     elif edit_status == 3:
         edit_status = "Completed"
+        edit["completed_ad"] = time_date_stamp()
     
     # Change edit
     if edit_title:
@@ -196,15 +200,15 @@ def edit_task(tasks, FILE_TASKS):
     save(tasks=tasks, FILE_TASKS=FILE_TASKS)
     print(f"Task: {edit_title} is changed.")
     time.sleep(1)
-    print("\n" * 25)
+    print("\n" * clean_screen)
 
 def delete_task(tasks, FILE_TASKS):
     # Header
-    print("\n" * 25)
+    print("\n" * clean_screen)
     print(f"{BOLD}Delete task{RESET}")
-    print("─" * 53)
+    print("─" * separate_line)
     status_color(tasks=tasks)
-    print("─" * 53)
+    print("─" * separate_line)
     print()
 
     # Edit choise, what task to delete
@@ -214,9 +218,9 @@ def delete_task(tasks, FILE_TASKS):
     
     delete = tasks[delete_choice]
 
-    print("\n" * 25)
+    print("\n" * clean_screen)
     print(f"{BOLD}Edit{RESET}")
-    print("─" * 53)
+    print("─" * separate_line)
     print(f"Title: {delete["title"]}")
     print(f"Description: {delete["description"]}")
     color_status = None
@@ -227,7 +231,7 @@ def delete_task(tasks, FILE_TASKS):
     elif delete["status"] == "Completed":
         color_status = GREEN_BOLD +delete["status"] + RESET
     print(f"Status: {color_status}")
-    print("─" * 53)
+    print("─" * separate_line)
     print()
     
     # Confirm delete
@@ -244,14 +248,14 @@ def delete_task(tasks, FILE_TASKS):
     else:
         print(f"Nothing is deleted.")
         time.sleep(1)
-    print("\n" * 25)
+    print("\n" * clean_screen)
 
 def show_tasks(tasks):
-    print("\n" * 25)
-    print("─" * 53)
+    print("\n" * clean_screen)
+    print("─" * separate_line)
 
     for index, task in enumerate(tasks):
-        print(f"{CYAN_BOLD}{index}{RESET}")
+        print(f"{CYAN_BOLD}{index}.{RESET}")
         print(f"{BOLD}Id: {RESET}{task["id"]}")
         print(f"{BOLD}Title: {RESET}{task["title"]}")
         print(f"{BOLD}Description: {RESET}{task["description"]}")
@@ -266,13 +270,75 @@ def show_tasks(tasks):
         
         print(f"{BOLD}Status: {RESET}{show_color_status}")
         print(f"{BOLD}Completed_ad: {RESET}{task["completed_ad"]}")
-        print("─" * 53)
-        
+        print("─" * separate_line)
+
+def change_status(tasks, FILE_TASKS):
+    """Change status"""
+    # Header
+    print("\n" * clean_screen)
+    print(f"{BOLD}Change status{RESET}")
+    print("─" * separate_line)
+    status_color(tasks=tasks)
+    print("─" * separate_line)
+    print()
+    
+    # Edit choise, what task to delete
+    change_status_choice = int(input(f"Wich task you want to change, type 0 to {len(tasks)-1}: "))
+    while change_status_choice < 0 or change_status_choice >= len(tasks):
+        change_status_choice = int(input(f"Invalid index, type 0 to {len(tasks)-1}: "))
+    
+    change_status = tasks[change_status_choice]
+    
+    print("\n" * clean_screen)
+    print(f"{BOLD}Change status{RESET}")
+    print("─" * separate_line)
+    print(f"Title: {change_status["title"]}")
+    print(f"Description: {change_status["description"]}")
+    show_task_color_status = None
+    if change_status["status"] == "Not completed":
+        show_task_color_status = RED_BOLD + change_status["status"] + RESET
+    elif change_status["status"] == "In progress":
+        show_task_color_status = YELLOW_BOLD + change_status["status"] + RESET
+    elif change_status["status"] == "Completed":
+        show_task_color_status = GREEN_BOLD +change_status["status"] + RESET
+    print(f"Status: {show_task_color_status}")
+    print("─" * separate_line)
+    print()
+
+    # Change status
+    change_task_status = int(input("Change status:\n"
+                            f"{CYAN_BOLD}1. {RESET}Not completed\n"
+                            f"{CYAN_BOLD}2. {RESET}In progress\n"
+                            f"{CYAN_BOLD}3. {RESET}Completed\n\n"
+                            "Make youre choise type 1 to 3: "))
+    print()
+    while change_task_status < 1 or change_task_status > 3:
+        change_task_status = int(input("Invalid choice, type 1, 2 or 3: "))
+    if change_task_status == 1:
+        change_task_status = "Not completed"
+    elif change_task_status == 2:
+        change_task_status = "In progress"
+    elif change_task_status == 3:
+        change_task_status = "Completed"
+        change_status["completed_ad"] = time_date_stamp()
+
+    if change_task_status:
+        change_status["status"] = change_task_status
+    
+    # Save status
+    save(tasks=tasks, FILE_TASKS=FILE_TASKS)
+    print(f"{change_status["title"]} Status is changed to: {BOLD}{change_status["status"]}{RESET}.")
+    time.sleep(1)
+    print("\n" * clean_screen)
+    
+
+
+
 
 def taskManager(tasks, FILE_TASKS):
     Exit = False
     read_anim()
-    print("\n" * 25)
+    print("\n" * clean_screen)
 
     while Exit is False:
 
@@ -294,6 +360,8 @@ def taskManager(tasks, FILE_TASKS):
             delete_task(tasks=tasks, FILE_TASKS=FILE_TASKS)
         elif choice_mainMenu == 5:
             show_tasks(tasks=tasks)
+        elif choice_mainMenu == 6:
+            change_status(tasks=tasks, FILE_TASKS=FILE_TASKS)
             
 
 
