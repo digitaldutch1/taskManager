@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "id": "1ef92e31",
+        "title": "Test",
+        "description": "d3",
+        "created_ad": "Date: 27-11-2025 Time: 19:38",
+        "status": "Completed",
+        "completed_ad": null
+    },
+    {
+        "id": "e24b8406",
+        "title": "Eten",
+        "description": "koken kip tandoori",
+        "created_ad": "Date: 27-11-2025 Time: 19:50",
+        "status": "Completed",
+        "completed_ad": null
+    },
+    {
+        "id": "f3b65087",
+        "title": "Taskmanager 2",
+        "description": "Test taskmanager",
+        "created_ad": "Date: 27-11-2025 Time: 20:26",
+        "status": "In progress",
+        "completed_ad": null
+    }
+]
