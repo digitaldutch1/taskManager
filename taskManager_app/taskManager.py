@@ -6,9 +6,9 @@ from datetime import datetime
 import time
 from style import *
 
-FILE_TASKS = "taskManager_app/tasks.json"
+FILE_TASKS = "tasks.json"
 uuid = uuid.uuid4().hex[:8]
-clean_screen = 40
+clean_screen = 50
 separate_line = 53
 
 def read(FILE_TASKS):
